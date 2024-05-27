@@ -20,7 +20,9 @@ class InvoiceController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $invoices = invoice::all();
+        $invoices = invoice::with(['section' => function($data) {
+            $data->withTrashed();
+        }])->get();
         return view('invoices.invoices', compact('invoices'));
     }
 
